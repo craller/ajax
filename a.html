@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+    手机号：<input type="text" id="number" placeholder="请输入手机号">
+    <span id="prompt">请输入手机号</span>
+    <button id="btn">提交</button>
+
+    </div>
+    <script src = "ajax.js"></script>
+     <script>
+          var number = document.getElementById('number');
+          var prompt = document.getElementById('prompt');
+          var tel;
+function test(ajaxData){
+         var flag = true;
+         prompt.style.display = 'none';
+         var data = JSON.parse(ajaxData);
+         for(var i = 0; i<data.info.length;i++){
+             if(tel == data.info[i].number){
+                 flag = false;
+                 break;
+             }
+         }
+         if(flag == true){
+             prompt.style.display = 'inline';
+             prompt.innerHTML = '可注册';
+             prompt.style.color = 'green';
+         }else{
+             prompt.style.display = 'inline';
+             prompt.innerHTML = '改号码已被注册';
+             prompt.style.color = 'red';
+         }
+}
+  
+
+function aa(){
+    tel = number.value;
+    if(tel.length == 11){
+        ajax('GET','./baidu.txt',true,'',test);
+    }else{
+        prompt.style.display = 'inline';
+        prompt.innerHTML = '请输入正确的手机号';
+        prompt.style.color = 'red';
+    }
+}
+
+            number.onblur = aa;
+     </script>
+</body>
+</html>
